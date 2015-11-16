@@ -20,3 +20,5 @@ if(fNtCreateFile)
     		0);
 }
 ```
+
+R3API has two template argument, return type, call mode (default mode is std_call)
