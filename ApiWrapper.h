@@ -11,6 +11,11 @@ enum CALL_MODE
 	fast_call,
 	std_call,
 };
+template<typename T>
+struct TYPE_HOLDER
+{
+};
+#define RET(x)	((TYPE_HOLDER<x>*)NULL)
 
 template<CALL_MODE mode,typename RVal>
 struct BASE_CALL
@@ -27,13 +32,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall* )())addr)();
+			return (static_cast<RVal(_stdcall* )()>(addr))();
 		case fast_call:
-			return ((RVal(_fastcall*)())addr)();
+			return (static_cast<RVal(_fastcall*)()>(addr))();
 		case cdecl_call:
-			return ((RVal(_cdecl*   )())addr)();
+			return (static_cast<RVal(_cdecl*   )()>(addr))();
 		default:
-			return ((RVal(*         )())addr)();
+			return (static_cast<RVal(*         )()>(addr))();
 		}
 	}
 
@@ -43,13 +48,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall* )(T1))addr)(v1);
+			return (static_cast<RVal(_stdcall* )(T1)>(addr))(v1);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1))addr)(v1);
+			return (static_cast<RVal(_fastcall*)(T1)>(addr))(v1);
 		case cdecl_call:
-			return ((RVal(_cdecl*   )(T1))addr)(v1);
+			return (static_cast<RVal(_cdecl*   )(T1)>(addr))(v1);
 		default:
-			return ((RVal(*         )(T1))addr)(v1);
+			return (static_cast<RVal(*         )(T1)>(addr))(v1);
 		}
 	}
 
@@ -59,13 +64,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall* )(T1,T2))addr)(v1,v2);
+			return (static_cast<RVal(_stdcall* )(T1,T2)>(addr))(v1,v2);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2))addr)(v1,v2);
+			return (static_cast<RVal(_fastcall*)(T1,T2)>(addr))(v1,v2);
 		case cdecl_call:
-			return ((RVal(_cdecl*   )(T1,T2))addr)(v1,v2);
+			return (static_cast<RVal(_cdecl*   )(T1,T2)>(addr))(v1,v2);
 		default:
-			return ((RVal(*         )(T1,T2))addr)(v1,v2);
+			return (static_cast<RVal(*         )(T1,T2)>(addr))(v1,v2);
 		}
 	}
 
@@ -75,13 +80,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall* )(T1,T2,T3))addr)(v1,v2,v3);
+			return (static_cast<RVal(_stdcall* )(T1,T2,T3)>(addr))(v1,v2,v3);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3))addr)(v1,v2,v3);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3)>(addr))(v1,v2,v3);
 		case cdecl_call:
-			return ((RVal(_cdecl*   )(T1,T2,T3))addr)(v1,v2,v3);
+			return (static_cast<RVal(_cdecl*   )(T1,T2,T3)>(addr))(v1,v2,v3);
 		default:
-			return ((RVal(*         )(T1,T2,T3))addr)(v1,v2,v3);
+			return (static_cast<RVal(*         )(T1,T2,T3)>(addr))(v1,v2,v3);
 		}
 	}
 
@@ -91,13 +96,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall *)(T1,T2,T3,T4))addr)(v1,v2,v3,v4);
+			return (static_cast<RVal(_stdcall *)(T1,T2,T3,T4)>(addr))(v1,v2,v3,v4);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3,T4))addr)(v1,v2,v3,v4);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3,T4)>(addr))(v1,v2,v3,v4);
 		case cdecl_call:
-			return ((RVal(_cdecl   *)(T1,T2,T3,T4))addr)(v1,v2,v3,v4);
+			return (static_cast<RVal(_cdecl   *)(T1,T2,T3,T4)>(addr))(v1,v2,v3,v4);
 		default:
-			return ((RVal(*         )(T1,T2,T3,T4))addr)(v1,v2,v3,v4);
+			return (static_cast<RVal(*         )(T1,T2,T3,T4)>(addr))(v1,v2,v3,v4);
 		}
 	}
 
@@ -107,13 +112,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall *)(T1,T2,T3,T4,T5))addr)(v1,v2,v3,v4,v5);
+			return (static_cast<RVal(_stdcall *)(T1,T2,T3,T4,T5)>(addr))(v1,v2,v3,v4,v5);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3,T4,T5))addr)(v1,v2,v3,v4,v5);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3,T4,T5)>(addr))(v1,v2,v3,v4,v5);
 		case cdecl_call:
-			return ((RVal(_cdecl   *)(T1,T2,T3,T4,T5))addr)(v1,v2,v3,v4,v5);
+			return (static_cast<RVal(_cdecl   *)(T1,T2,T3,T4,T5)>(addr))(v1,v2,v3,v4,v5);
 		default:
-			return ((RVal(*         )(T1,T2,T3,T4,T5))addr)(v1,v2,v3,v4,v5);
+			return (static_cast<RVal(*         )(T1,T2,T3,T4,T5)>(addr))(v1,v2,v3,v4,v5);
 		}
 	}
 
@@ -123,13 +128,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall *)(T1,T2,T3,T4,T5,T6))addr)(v1,v2,v3,v4,v5,v6);
+			return (static_cast<RVal(_stdcall *)(T1,T2,T3,T4,T5,T6)>(addr))(v1,v2,v3,v4,v5,v6);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3,T4,T5,T6))addr)(v1,v2,v3,v4,v5,v6);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3,T4,T5,T6)>(addr))(v1,v2,v3,v4,v5,v6);
 		case cdecl_call:
-			return ((RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6))addr)(v1,v2,v3,v4,v5,v6);
+			return (static_cast<RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6)>(addr))(v1,v2,v3,v4,v5,v6);
 		default:
-			return ((RVal(*         )(T1,T2,T3,T4,T5,T6))addr)(v1,v2,v3,v4,v5,v6);
+			return (static_cast<RVal(*         )(T1,T2,T3,T4,T5,T6)>(addr))(v1,v2,v3,v4,v5,v6);
 		}
 	}
 
@@ -139,13 +144,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7))addr)(v1,v2,v3,v4,v5,v6,v7);
+			return (static_cast<RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7)>(addr))(v1,v2,v3,v4,v5,v6,v7);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7))addr)(v1,v2,v3,v4,v5,v6,v7);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7)>(addr))(v1,v2,v3,v4,v5,v6,v7);
 		case cdecl_call:
-			return ((RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7))addr)(v1,v2,v3,v4,v5,v6,v7);
+			return (static_cast<RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7)>(addr))(v1,v2,v3,v4,v5,v6,v7);
 		default:
-			return ((RVal(*         )(T1,T2,T3,T4,T5,T6,T7))addr)(v1,v2,v3,v4,v5,v6,v7);
+			return (static_cast<RVal(*         )(T1,T2,T3,T4,T5,T6,T7)>(addr))(v1,v2,v3,v4,v5,v6,v7);
 		}
 	}
 
@@ -155,13 +160,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7,T8))addr)(v1,v2,v3,v4,v5,v6,v7,v8);
+			return (static_cast<RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7,T8)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7,T8))addr)(v1,v2,v3,v4,v5,v6,v7,v8);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7,T8)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8);
 		case cdecl_call:
-			return ((RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7,T8))addr)(v1,v2,v3,v4,v5,v6,v7,v8);
+			return (static_cast<RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7,T8)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8);
 		default:
-			return ((RVal(*         )(T1,T2,T3,T4,T5,T6,T7,T8))addr)(v1,v2,v3,v4,v5,v6,v7,v8);
+			return (static_cast<RVal(*         )(T1,T2,T3,T4,T5,T6,T7,T8)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8);
 		}
 	}
 
@@ -171,13 +176,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7,T8,T9))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9);
+			return (static_cast<RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7,T8,T9)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7,T8,T9))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7,T8,T9)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9);
 		case cdecl_call:
-			return ((RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7,T8,T9))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9);
+			return (static_cast<RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7,T8,T9)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9);
 		default:
-			return ((RVal(*         )(T1,T2,T3,T4,T5,T6,T7,T8,T9))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9);
+			return (static_cast<RVal(*         )(T1,T2,T3,T4,T5,T6,T7,T8,T9)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9);
 		}
 	}
 
@@ -187,13 +192,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
+			return (static_cast<RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
 		case cdecl_call:
-			return ((RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
+			return (static_cast<RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
 		default:
-			return ((RVal(*         )(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
+			return (static_cast<RVal(*         )(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
 		}
 	}
 
@@ -203,13 +208,13 @@ struct BASE_CALL
 		switch(mode)
 		{
 		case std_call:
-			return ((RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
+			return (static_cast<RVal(_stdcall *)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
 		case fast_call:
-			return ((RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
+			return (static_cast<RVal(_fastcall*)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
 		case cdecl_call:
-			return ((RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
+			return (static_cast<RVal(_cdecl   *)(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
 		default:
-			return ((RVal(*         )(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11))addr)(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
+			return (static_cast<RVal(*         )(T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11)>(addr))(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
 		}
 	}
 };
